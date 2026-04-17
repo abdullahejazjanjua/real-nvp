@@ -41,12 +41,12 @@ def evaluate_after_one_epoch(
     savepath: str,
     device: str,
     num_samples: int,
-    embed_dim: int,
+    channels: int,
     current_epoch: int,
 ):
     model.eval()
     with torch.no_grad():
-        z = torch.randn(num_samples, embed_dim, 1, 1).to(device)
+        z = torch.randn(num_samples, channels, 1, 1).to(device)
         reconstructed_img = model.generate(z)
 
         grid = make_grid(reconstructed_img, nrow=num_samples, padding=2, normalize=True)
