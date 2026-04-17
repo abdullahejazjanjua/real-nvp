@@ -13,16 +13,16 @@ from utils.engine import train_one_epoch, evaluate_after_one_epoch
 def args_parser():
     parser = argparse.ArgumentParser(description="VAE parametres")
     
-    parser.add_argument("--dataset_path", default="data/", type=str)
+    parser.add_argument("--dataset_path", default="../variational-autoencoder/data/", type=str)
     
     # Training specifications
-    parser.add_argument("--batch_size", default=32, type=int)
-    parser.add_argument("--grad_steps", default=8, type=int, help="For simulating higher batch sizes")
+    parser.add_argument("--batch_size", default=4, type=int)
+    parser.add_argument("--grad_steps", default=2, type=int, help="For simulating higher batch sizes")
     parser.add_argument("--epochs", default=3, type=int)
-    parser.add_argument("--lr", default=0.0005, type=float, help="Base learning rate")
+    parser.add_argument("--lr", default=0.0001, type=float, help="Base learning rate")
     parser.add_argument("--hidden_dim", default=256, type=int, help="latent dimension of z")
-    parser.add_argument("--num_layers", default=256, type=int, help="number of layers of AffineCoupling")
-    parser.add_argument("--grad_clip", default=1.0, type=float)
+    parser.add_argument("--num_layers", default=4, type=int, help="number of layers of AffineCoupling")
+    parser.add_argument("--grad_clip", default=3.0, type=float)
 
     # Additional parametres
     parser.add_argument("--print_freq", default=50, type=int)

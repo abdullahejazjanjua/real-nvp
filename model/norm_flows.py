@@ -67,12 +67,20 @@ class AffineCoupling(nn.Module):
             ),
         )
 
+        last_layer = self.nn[-1]
+        assert isinstance(last_layer, nn.Conv2d)
+        nn.init.zeros_(last_layer.weight)
+        if last_layer.bias is not None:
+            nn.init.zeros_(last_layer.bias)
+
     def inverse_mapping(self, x: torch.Tensor):
 
         x1, x2 = self.mask * x, (1 - self.mask) * x
 
         out = self.nn(x1)
         mu, alpha = out.chunk(2, dim=1)
+        alpha = torch.tanh(alpha)
+
         mu, alpha = mu * (1 - self.mask), alpha * (1 - self.mask)
 
         z_transformed = (x2 - mu) * torch.exp(-alpha)
@@ -86,6 +94,7 @@ class AffineCoupling(nn.Module):
 
         out = self.nn(z1)
         mu, alpha = out.chunk(2, dim=1)
+        alpha = torch.tanh(alpha)
         mu, alpha = mu * (1 - self.mask), alpha * (1 - self.mask)
 
         x_transformed = z2 * torch.exp(alpha) + mu

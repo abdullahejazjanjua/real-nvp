@@ -18,8 +18,15 @@ def train_one_epoch(model, dataloader, optimizer, args):
 
             img = imgs[start_idx:end_idx, ...].to(args.device)
             z, log_dets = model(img)
-            p_z = torch.distributions.Normal(0, 1).log_prob(z).sum(dim=-1)
-            loss = p_z + log_dets
+
+            if torch.isnan(z).any():
+                raise ValueError("NaN detected in latent representation (z).")
+            if torch.isnan(log_dets).any():
+                raise ValueError("NaN detected in log determinants.")
+            
+            p_z = torch.distributions.Normal(0, 1).log_prob(z).sum(dim=tuple(range(1, z.ndim)))
+            loss = -(p_z + log_dets).mean()
+
 
             loss = loss / args.grad_steps
             total_loss += loss.item()
