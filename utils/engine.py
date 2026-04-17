@@ -17,6 +17,7 @@ def train_one_epoch(model, dataloader, optimizer, args):
             end_idx = start_idx + args.batch_size
 
             img = imgs[start_idx:end_idx, ...].to(args.device)
+            img = (img * 255.0 + torch.rand_like(img)) / 256.0
             z, log_dets = model(img)
 
             if torch.isnan(z).any():
@@ -26,7 +27,6 @@ def train_one_epoch(model, dataloader, optimizer, args):
             
             log_prob_z = torch.distributions.Normal(0, 1).log_prob(z).sum(dim=tuple(range(1, z.ndim)))
             loss = -(log_prob_z + log_dets).mean()
-
 
             loss = loss / args.grad_steps
             total_loss += loss.item()
@@ -49,11 +49,12 @@ def evaluate_after_one_epoch(
     device: str,
     num_samples: int,
     channels: int,
+    img_dim: tuple[int, int],
     current_epoch: int,
 ):
     model.eval()
     with torch.no_grad():
-        z = torch.randn(num_samples, channels, 1, 1).to(device)
+        z = torch.randn(num_samples, channels, img_dim[0], img_dim[1]).to(device)
         reconstructed_img = model.generate(z)
 
         grid = make_grid(reconstructed_img, nrow=num_samples, padding=2, normalize=True)

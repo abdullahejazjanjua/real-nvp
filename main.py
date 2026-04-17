@@ -68,7 +68,7 @@ def main(args):
         print("Average stats:")
         print(f"    loss: {loss}, time: {(end-start):.4f}s")
         print("Starting Evaluating:")
-        evaluate_after_one_epoch(model, savepath=args.savepath, device=args.device, num_samples=2, channels=3, current_epoch=epoch)
+        evaluate_after_one_epoch(model, savepath=args.savepath, device=args.device, num_samples=2, channels=3, img_dim=(128, 128), current_epoch=epoch)
 
 if __name__ == "__main__":
     args = args_parser().parse_args()
