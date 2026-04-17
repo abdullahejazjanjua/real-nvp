@@ -17,7 +17,7 @@ A PyTorch implementation of RealNVP from scratch, trained on the CelebA dataset.
 ├── model/
 │   ├── norm-flows.py      # RealNVP container with coupling layers
 ├── utils/
-│   ├── dataloader.py      # CelebA dataset loader with dequantization logic
+│   ├── dataloader.py      # CelebA dataset loader
 │   ├── engine.py          # Training logic and NLL evaluation
 └── logs/                  # Generated samples saved here after each epoch
 ```
