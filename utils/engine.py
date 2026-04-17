@@ -24,8 +24,8 @@ def train_one_epoch(model, dataloader, optimizer, args):
             if torch.isnan(log_dets).any():
                 raise ValueError("NaN detected in log determinants.")
             
-            p_z = torch.distributions.Normal(0, 1).log_prob(z).sum(dim=tuple(range(1, z.ndim)))
-            loss = -(p_z + log_dets).mean()
+            log_prob_z = torch.distributions.Normal(0, 1).log_prob(z).sum(dim=tuple(range(1, z.ndim)))
+            loss = -(log_prob_z + log_dets).mean()
 
 
             loss = loss / args.grad_steps

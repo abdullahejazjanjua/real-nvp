@@ -29,7 +29,7 @@ def args_parser():
     parser.add_argument("--num_workers", default=2, type=int)
     parser.add_argument("--device", default="mps", type=str)
     parser.add_argument("--savepath", default="logs/", type=str)
-    parser.add_argument("--dataset_num_subset", default=50000, type=int, help="if you want to train on a subset of total images only. Set to -1 to use entire data")
+    parser.add_argument("--dataset_num_subset", default=2000, type=int, help="if you want to train on a subset of total images only. Set to -1 to use entire data")
 
 
     return parser
