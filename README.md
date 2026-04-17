@@ -15,13 +15,10 @@ A PyTorch implementation of RealNVP from scratch, trained on the CelebA dataset.
 ```
 ├── main.py                # Entry point with argument parsing and training loop
 ├── model/
-│   ├── realnvp.py         # RealNVP container for sequential coupling layers
-│   └── coupling.py        # Affine Coupling Layer implementation
+│   ├── norm-flows.py      # RealNVP container with coupling layers
 ├── utils/
 │   ├── dataloader.py      # CelebA dataset loader with dequantization logic
 │   ├── engine.py          # Training logic and NLL evaluation
-│   └── sanity_checks.py   # NaN detection and gradient monitoring
-├── data/                  # CelebA images (not included)
 └── logs/                  # Generated samples saved here after each epoch
 ```
 
